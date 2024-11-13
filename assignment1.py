@@ -62,19 +62,7 @@ def after(date: str) -> str:
     day, mon, year = (int(x) for x in date.split('/'))
     day += 1  # next day
 
-    lyear = year % 4
-    if lyear == 0:
-        leap_flag = True
-    else:
-        leap_flag = False  # this is not a leap year
-
-    lyear = year % 100
-    if lyear == 0:
-        leap_flag = False  # this is not a leap year
-
-    lyear = year % 400
-    if lyear == 0:
-        leap_flag = True  # this is a leap year
+    leap_flag = leap_year(year) # leap year check
 
     mon_dict= {1: 31, 2: 28, 3: 31, 4: 30, 5: 31, 6: 30,
            7: 31, 8: 31, 9: 30, 10: 31, 11: 30, 12: 31}
@@ -90,6 +78,7 @@ def after(date: str) -> str:
             mon = 1
         day = 1  # if tmp_day > this month's max, reset to 1
     return f"{day:02}/{mon:02}/{year}"
+
 
 def before(date: str) -> str:
     "Returns previous day's date as DD/MM/YYYY"
