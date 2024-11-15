@@ -166,7 +166,18 @@ def valid_date(date: str) -> bool:
 
 def day_iter(start_date: str, num: int) -> str:
     "iterates from start date by num to return end date in DD/MM/YYYY"
-    ...
+    date = start_date
+
+    while num != 0:
+        if num > 0:
+            date = after(date)  # go to next day
+            num -= 1  # decrement of num by 1
+        else:
+            date = before(date)  # go to previous day
+            num += 1  # increment of num by 1
+
+    return date
+
 
 if __name__ == "__main__":
     # check length of arguments
