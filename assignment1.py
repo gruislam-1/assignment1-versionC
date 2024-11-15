@@ -118,7 +118,51 @@ def usage():
 
 def valid_date(date: str) -> bool:
     "check validity of date"
-    ...
+    date_parts = date.split('/')  # split date into parts
+
+    if len(date_parts) != 3:  # check for three parts format (day, month, year)
+        return False # if date not three parts format return "False"
+
+    day_str, mon_str, year_str = date_parts # strings of day, month, year
+
+    # check day, month, year = digits/numbers
+    day_is_digit = day_str.isdigit()
+    month_is_digit = mon_str.isdigit()
+    year_is_digit = year_str.isdigit()
+
+    # return False/Invalid if day, month, year are not digits/numbers
+    if day_is_digit == False:
+        return False
+    if month_is_digit == False:
+        return False
+    if year_is_digit == False:
+        return False
+
+    # day, month, year to integers
+    day = int(day_str)
+    mon = int(mon_str)
+    year = int(year_str)
+
+    if mon < 1: # checking if month number is less than 1 = invalid
+        return False
+    if mon > 12: # checking if month number greater than 12 = invalid
+        return False
+
+    days_in_month = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]  # number of days in month
+
+    if (year % 4 == 0 and year % 100 != 0):
+        days_in_month[1] = 29  # leap year for February
+    else:
+        if year % 400 == 0:
+            days_in_month[1] = 29  # leap year for February
+
+    if day < 1: # checking for valid days of the month
+        return False
+    if day > days_in_month[mon - 1]: # checking for valid days of the month
+        return False
+
+    return True  # if date is valid return "True"
+
 
 def day_iter(start_date: str, num: int) -> str:
     "iterates from start date by num to return end date in DD/MM/YYYY"
