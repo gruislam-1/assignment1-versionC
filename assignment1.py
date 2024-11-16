@@ -114,6 +114,7 @@ def before(date: str) -> str:
 def usage():
     "Print a usage message to the user"
     print("Usage: " + str(sys.argv[0]) + " DD/MM/YYYY NN")
+    print("The date and/or number is invalid")
     sys.exit()
 
 def valid_date(date: str) -> bool:
@@ -179,10 +180,34 @@ def day_iter(start_date: str, num: int) -> str:
     return date
 
 
+def valid_number(num: str) -> bool:
+    """
+    check that second argument is a valid number (+/-)
+    """
+    if num[0] == '-':  # to check if number starts with a negative ('-') sign/o>
+        return num[1:].isdigit()  # to check if the other strings are digit/num>
+    return num.isdigit()  # check if all the strings are numbers/digits
+
+
 if __name__ == "__main__":
-    # check length of arguments
-    # check first arg is a valid date
-    # check that second arg is a valid number (+/-)
-    # call day_iter function to get end date, save to x
-    # print(f'The end date is {day_of_week(x)}, {x}.')
+    if len(sys.argv) != 3: # check length of arguments
+        usage()
+
+    start_date = sys.argv[1]
+    num_days_str = sys.argv[2]
+
+    if valid_date(start_date) == False: # check first arg is a valid date
+        usage()
+
+    if valid_number(num_days_str) == False: # check that second arg is a valid number (+/-)
+        usage()
+
+    num_days = int(num_days_str) # convert second argument to integer "int()"
+
+    end_date = day_iter(start_date, num_days) # call day_iter function to get and save the end date
+
+    week_day = day_of_week(end_date) # call the day_of_week function to get the day (Mon, Tue, etc.) of end date
+
+    print(f"The end date is {week_day}, {end_date}.") # print(f'The end date is {day_of_week(x)}, {x}.')
+
     pass
